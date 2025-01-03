@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow:0 7px 20px black;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-design {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300%;
+            height: 150%;
+            background: linear-gradient(135deg, #ffd700, #fff700);
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+            z-index: 1;
+        }
+        .screen__background__shape {
+      transform: rotate(45deg);
+      position: absolute;
+    }
+    .screen__background__shape1 {
+      height: 620px;
+      width: 720px;
+      background: #FFF; 
+      top: -50px;
+      right: 120px; 
+      border-radius: 0 72px 0 0;
+    }
+
+    .screen__background__shape2 {
+      height: 250px;
+      width: 220px;
+      background: #fff700;  
+      top: -172px;
+      right: 0; 
+      border-radius: 32px;
+    }
+
+    .screen__background__shape3 {
+      height: 560px;
+      width: 170px;
+      background: linear-gradient(270deg, #ffff2f, #fff202);
+      top: -24px;
+      right: 0; 
+      border-radius: 32px;
+    }
+
+    .screen__background__shape4 {
+      height: 400px;
+      width: 200px;
+      background: linear-gradient(270deg, #ffea02, #ffff2f); 
+      top: 400px;
+      right: -9px;  
+      border-radius: 60px;
+    }
+        
+       
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+            z-index: 3;
+        }
+
+        .form-group input,
+        .form-group select{
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            outline: none;
+            font-size: 16px;
+            background: transparent;
+
+        }
+    
+        .form-group input::placeholder,
+        .form-group select,
+        .form-group :hover {
+            color: #666;
+            border-bottom-color: #ffff2f;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: 2px solid #ffff2f;
+            border-radius: 25px;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            z-index: 3;
+            position: relative;
+        }
+
+        .submit-btn:hover {
+            background: #ffff2f;
+            
+        }
+
+        .login-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+            z-index: 3;
+        }
+
+        .login-link:hover {
+            font-size: 18px;
+            transition-duration: 0.2s;
+        }
+
+        .error-message {
+            color: #ff3333;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+
+     
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="background-design">
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                 <span class="screen__background__shape screen__background__shape3"></span>
+                 <span class="screen__background__shape screen__background__shape2"></span>
+                 <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+        <form id="registerForm">
+            <div class="form-group">
+                <input type="text" id="fullName" placeholder="Enter full name(الاسم و اللقب))" required>
+                <div class="error-message" id="fullNameError">Please enter your full name</div>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Enter email address(الايميل)" required>
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+            </div>
+            <div class="form-group">
+                <input type="tel" id="phone" placeholder="Enter phone number(رقم الهاتف)" required>
+                <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+            </div>
+            <div class="form-group">
+                <input type="text" id="birthDate" placeholder="10/dd/yyyy(تاريخ الميلاد)" required>
+                <div class="error-message" id="birthDateError">Please enter a valid birth date</div>
+            </div>
+            <div class="form-group">
+                <select id="gender" required>
+                    <option value="">Select Gender(حدد جنسك)</option>
+                    <option value="male">Male(ذكر)</option>
+                    <option value="female">Female(أنثى)</option>
+                </select>
+                <div class="error-message" id="genderError">Please select your gender</div>
+            </div>
+            <div class="form-group">
+                <select id="userType" required>
+                    <option value="">Are you:(هل أنت)</option>
+                    <option value="doctor">Doctor(طبيب) </option>
+                    <option value="patient">Patient(مريض)</option>
+                </select>
+                <div class="error-message" id="userTypeError">Please select your user type</div>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Create a password(كلمة سر)" required>
+                <div class="error-message" id="passwordError">Password must be at least 6 characters long</div>
+            </div>
+            <div class="form-group">
+                <input type="password" id="confirmPassword" placeholder="Confirm your password(تأكيد كلمة السر)" required>
+                <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+        <a href="LOG IN PAGE.html" class="login-link">have you an account?لديك حساب؟</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registerForm');
+            const fullName = document.getElementById('fullName');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const birthDate = document.getElementById('birthDate');
+            const gender = document.getElementById('gender');
+            const userType = document.getElementById('userType');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+
+            const fullNameError = document.getElementById('fullNameError');
+            const emailError = document.getElementById('emailError');
+            const phoneError = document.getElementById('phoneError');
+            const birthDateError = document.getElementById('birthDateError');
+            const genderError = document.getElementById('genderError');
+            const userTypeError = document.getElementById('userTypeError');
+            const passwordError = document.getElementById('passwordError');
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+            function showError(input, errorElement, message) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                input.style.borderBottom = '1px solid #ff3333';
+            }
+
+            function hideError(input, errorElement) {
+                errorElement.style.display = 'none';
+                input.style.borderBottom = '1px solid #ddd';
+            }
+
+            function validateFullName() {
+                if (fullName.value.trim() === '') {
+                    showError(fullName, fullNameError, 'Please enter your full name');
+                    return false;
+                }
+                hideError(fullName, fullNameError);
+                return true;
+            }
+
+            function validateEmail() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email.value)) {
+                    showError(email, emailError, 'Please enter a valid email address');
+                    return false;
+                }
+                hideError(email, emailError);
+                return true;
+            }
+
+            function validatePhone() {
+                const phoneRegex = /^0\d{9}$/;
+                if (!phoneRegex.test(phone.value)) {
+                    showError(phone, phoneError, 'Please enter a valid 10-digit phone number starting with 0');
+                    return false;
+                }
+                hideError(phone, phoneError);
+                return true;
+            }
+
+            function validateBirthDate() {
+                const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/;
+                if (!dateRegex.test(birthDate.value)) {
+                    showError(birthDate, birthDateError, 'Please enter a valid date in MM/DD/YYYY format');
+                    return false;
+                }
+                hideError(birthDate, birthDateError);
+                return true;
+            }
+
+            function validateGender() {
+                if (gender.value === '') {
+                    showError(gender, genderError, 'Please select your gender');
+                    return false;
+                }
+                hideError(gender, genderError);
+                return true;
+            }
+
+            function validateUserType() {
+                if (userType.value === '') {
+                    showError(userType, userTypeError, 'Please select your user type');
+                    return false;
+                }
+                hideError(userType, userTypeError);
+                return true;
+            }
+
+            function validatePassword() {
+                if (password.value.length < 6) {
+                    showError(password, passwordError, 'Password must be at least 6 characters long');
+                    return false;
+                }
+                hideError(password, passwordError);
+                return true;
+            }
+
+            function validateConfirmPassword() {
+                if (password.value !== confirmPassword.value) {
+                    showError(confirmPassword, confirmPasswordError, 'Passwords do not match');
+                    return false;
+                }
+                hideError(confirmPassword, confirmPasswordError);
+                return true;
+            }
+
+            fullName.addEventListener('blur', validateFullName);
+            email.addEventListener('blur', validateEmail);
+            phone.addEventListener('blur', validatePhone);
+            birthDate.addEventListener('blur', validateBirthDate);
+            gender.addEventListener('change', validateGender);
+            userType.addEventListener('change', validateUserType);
+            password.addEventListener('blur', validatePassword);
+            confirmPassword.addEventListener('blur', validateConfirmPassword);
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const isFullNameValid = validateFullName();
+                const isEmailValid = validateEmail();
+                const isPhoneValid = validatePhone();
+                const isBirthDateValid = validateBirthDate();
+                const isGenderValid = validateGender();
+                const isUserTypeValid = validateUserType();
+                const isPasswordValid = validatePassword();
+                const isConfirmPasswordValid = validateConfirmPassword();
+
+                if (isFullNameValid && isEmailValid && isPhoneValid && isBirthDateValid && 
+                    isGenderValid && isUserTypeValid && isPasswordValid && isConfirmPasswordValid) {
+                    // Form is valid, store user type and redirect to home page
+                    localStorage.setItem('userType', userType.value);
+                    console.log('Form is valid. Redirecting to home page...');
+                    window.location.href = 'home.html'; // Redirect to home page
+                } else {
+                    console.log('Form is invalid. Please correct the errors.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

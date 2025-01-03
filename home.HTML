@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Home </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .home-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 7px 20px black;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-design {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300%;
+            height: 150%;
+            background: linear-gradient(135deg, #ffd700, #fff700);
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+            z-index: 1;
+        }
+
+        .screen__background__shape {
+            transform: rotate(45deg);
+            position: absolute;
+        }
+
+        .screen__background__shape1 {
+            height: 620px;
+            width: 720px;
+            background: #FFF; 
+            top: -50px;
+            right: 120px; 
+            border-radius: 0 72px 0 0;
+        }
+
+        .screen__background__shape2 {
+            height: 250px;
+            width: 220px;
+            background: #fff700;  
+            top: -172px;
+            right: 0; 
+            border-radius: 32px;
+        }
+
+        .screen__background__shape3 {
+            height: 560px;
+            width: 170px;
+            background: linear-gradient(270deg, #ffff2f, #fffb02);
+            top: -24px;
+            right: 0; 
+            border-radius: 32px;
+        }
+
+        .screen__background__shape4 {
+            height: 400px;
+            width: 200px;
+            background: linear-gradient(270deg, #ffea02, #ffff2f); 
+            top: 400px;
+            right: -9px;  
+            border-radius: 60px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 2;
+            font-size: 45px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .dashboard-btn {
+            width: 100%;
+            padding: 12px;
+            background: #ffff2f;
+            border: 5px solid #ffff2f;
+            border-radius: 25px;
+            color: #333;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-btn:hover {
+            background: #ffff2f;
+            font-size: 22px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="home-container">
+        <div class="background-design">
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+        <h1>Welcome to  Dashboard </h1><h1>  (مرحبًا بك في لوحة التحكم)</h1>
+        <div class="button-container">
+            <button id="patientDashboardBtn" class="dashboard-btn hidden">Patient Dashboard (لوحة تحكم المريض)</button>
+            <button id="patientFormBtn" class="dashboard-btn hidden">Health Form (الاستمارة)</button>
+            <button id="doctorDashboardBtn" class="dashboard-btn hidden">Doctor Dashboard (لوحة تحكم الطبيب)</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const patientDashboardBtn = document.getElementById('patientDashboardBtn');
+            const patientFormBtn = document.getElementById('patientFormBtn');
+            const doctorDashboardBtn = document.getElementById('doctorDashboardBtn');
+
+            // Simulating user type (in a real app, this would come from server-side authentication)
+            const userType = localStorage.getItem('userType') || 'patient'; // Default to patient if not set
+
+            if (userType === 'patient') {
+                patientDashboardBtn.classList.remove('hidden');
+                patientFormBtn.classList.remove('hidden');
+            } else if (userType === 'doctor') {
+                doctorDashboardBtn.classList.remove('hidden');
+            }
+
+            patientDashboardBtn.addEventListener('click', function() {
+               
+                window.location.href = 'PatientDashboard.html';
+            });
+
+            patientFormBtn.addEventListener('click', function() {
+                alert('Navigating to Health Form');
+                // In a real app, you would redirect to the health form page
+            });
+
+            doctorDashboardBtn.addEventListener('click', function() {
+                alert('Navigating to Doctor Dashboard');
+                // In a real app, you would redirect to the doctor dashboard page
+            });
+        });
+    </script>
+</body>
+</html>

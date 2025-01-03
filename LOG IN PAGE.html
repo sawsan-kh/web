@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://kit.fontawesome.com/1cf483120b.js" crossorigin="anonymous"></script>
+  <title>Login Form</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+   * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .register-container {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow:0 7px 20px black;
+    position: relative;
+    overflow: hidden;
+    }
+
+    .background-design {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 300%;
+      height: 150%;
+      background: linear-gradient(135deg, #ffd700, #fff700);
+      clip-path: polygon(100% 0, 0 0, 100% 100%);
+      z-index: 1;
+    }
+   
+
+    .screen__background { 
+      background: linear-gradient(135deg, #ffd700, #fff700);  
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      -webkit-clip-path: inset(0 0 0 0);
+      clip-path: inset(0 0 0 0);  
+      
+    }
+
+    .screen__background__shape {
+      transform: rotate(45deg);
+      position: absolute;
+    }
+
+    .screen__background__shape1 {
+      height: 620px;
+      width: 720px;
+      background: #FFF; 
+      top: -50px;
+      right: 120px; 
+      border-radius: 0 72px 0 0;
+    }
+
+    .screen__background__shape2 {
+      height: 220px;
+      width: 220px;
+      background: #ffea02;  
+      top: -172px;
+      right: 0; 
+      border-radius: 32px;
+    }
+
+    .screen__background__shape3 {
+      height: 540px;
+      width: 190px;
+      background: linear-gradient(270deg, #ffff2f, #ffea02);
+      top: -24px;
+      right: 0; 
+      border-radius: 32px;
+    }
+
+    .screen__background__shape4 {
+      height: 400px;
+      width: 200px;
+      background: #ffff2f;  
+      top: 420px;
+      right: 50px;  
+      border-radius: 60px;
+    }
+
+    .login {
+      width: 320px;
+      padding: 15px;
+      padding-top: 196px;
+      padding-left: 19px;
+    }
+
+    .login__field {
+      position: relative;
+      margin-bottom: 40px;
+      z-index: 3;
+    }
+   
+    .login__icon {
+      position: absolute;
+      top: 30px;
+      color: #ffd000;
+    }
+
+    .login__input {
+      width: 100%;
+      padding: 10px 0;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      outline: none;
+      font-size: 20px;
+      background: transparent;
+    }
+
+    .login__input:active,
+    .login__input:focus,
+    .login__input:hover {
+      outline: none;
+      border-bottom-color: #ffff2f;
+    }
+    .login__submit {
+      width: 100%;
+      padding: 12px;
+      background: white;
+      border: 2px solid #ffff2f;
+      border-radius: 25px;
+      color: #333;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      z-index: 3;
+      position: relative;
+    }
+
+    .login__submit:hover {
+      background: #ffff2f;
+     
+    }
+
+    .no-underline {
+        text-decoration: none;
+        color: inherit;
+    }
+
+
+
+    .social-login { 
+      display: block;
+      text-align: center;
+      margin-top: 90px;
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+      z-index: 3;
+      font-size: 15px;
+    }
+
+    .social-login:active,
+    .social-login:focus,
+    .social-login:hover {
+      outline: none;
+      font-size: 17px;
+      transition-duration: 0.2s;
+      
+    }
+    .error-message {
+    color: #ff3333;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div class="register-container">
+        <div class="screen">
+            <div class="screen__content">
+                <form class="login">
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <input type="text" class="login__input" id="username" placeholder="User name / Email (اسم المستخدم ) ">
+                        <div class="error-message" id="usernameError">Please enter a valid username (أدخل اسم مستخدم صحيح) </div>
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-lock"></i>
+                        <input type="password" class="login__input" id="password" placeholder="Password (كلمة السر)">
+                        <div class="error-message" id="passwordError">Please enter your password(أدخل كلمة السر)</div>
+                    </div>
+                    <a href="home.HTML" class="no-underline">
+                      <button class="button login__submit">
+                        <span class="button__text">Log In </span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                      </button>
+                    </a>
+                </form>
+                <div class="social-login" >
+                  <a href="registration.HTML" class="no-underline" >
+                    <h3>don't have an account?(لا تملك حساب؟)<br>register now(انشاء حساب)</h3>
+                  </a> 
+                </div>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                 <span class="screen__background__shape screen__background__shape3"></span>
+                 <span class="screen__background__shape screen__background__shape2"></span>
+                 <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const form = document.getElementById('login');
+          const username = document.getElementById('username');
+          const password = document.getElementById('password');
+          const usernameError = document.getElementById('usernameError');
+          const passwordError = document.getElementById('passwordError');
+
+          function showError(input, errorElement, message) {
+              errorElement.textContent = message;
+              errorElement.style.display = 'block';
+              input.style.borderBottom = '1px solid #ff3333';
+          }
+
+          function hideError(input, errorElement) {
+              errorElement.style.display = 'none';
+              input.style.borderBottom = '1px solid #ddd';
+          }
+
+          function validateUsername() {
+              if (username.value.trim() === '') {
+                  showError(username, usernameError, 'Please enter your username or email');
+                  return false;
+              }
+              hideError(username, usernameError);
+              return true;
+          }
+
+          function validatePassword() {
+              if (password.value === '') {
+                  showError(password, passwordError, 'Please enter your password');
+                  return false;
+              }
+              hideError(password, passwordError);
+              return true;
+          }
+
+          username.addEventListener('blur', validateUsername);
+          password.addEventListener('blur', validatePassword);
+
+          form.addEventListener('submit', function(e) {
+              e.preventDefault();
+
+              const isUsernameValid = validateUsername();
+              const isPasswordValid = validatePassword();
+
+              if (isUsernameValid && isPasswordValid) {
+                  console.log('Form is valid. Submitting...');
+                  window.location.href = 'home.HTML';
+                  // In a real application, you would send the login data to the server here
+                  alert('Login successful!');
+                  // For demonstration purposes, we'll just reset the form
+                  form.reset();
+              } else {
+                  console.log('Form is invalid. Please correct the errors.');
+              }
+          });
+      });
+  </script>
+</body>
+
+</html>

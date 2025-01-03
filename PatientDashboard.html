@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ffd700, #fff700);
+            color: #333;
+            text-align: center;
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+
+        h1, h2 {
+            margin-bottom: 17px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 7px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .list-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+/* Add these styles to the existing <style> section */
+    .message-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border-left: 4px solid #ffd700;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.message-content {
+    margin-top: 5px;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.unread {
+    background-color: #fffdf0;
+}
+        .notification {
+            background-color: #fffacd;
+            border-left: 4px solid #ffd700;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #notificationArea {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background-color: #fff;
+            border-left: 4px solid #ffd700;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 10px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+        <header>
+            <h1 id="welcomeMessage"></h1>
+        </header>
+
+        <div class="container">
+            <div id="notificationArea"></div>
+            <div class="dashboard-grid">
+                <div class="dashboard-card" id="appointmentsCard">
+                    <h2>Appointments (المواعيد)</h2>
+                    <div id="appointmentsList"></div>
+                </div>
+
+                <div class="dashboard-card" id="prescriptionsCard">
+                    <h2>Prescriptions (الوصفات الطبية)</h2>
+                    <div id="prescriptionsList"></div>
+                </div>
+
+                <div class="dashboard-card" id="testResultsCard">
+                    <h2>Test Results (نتائج الفحوصات)</h2>
+                    <div id="testResultsList"></div>
+                </div>
+
+                <div class="dashboard-card" id="messagesCard">
+                    <h2>Messages from Doctors (رسائل من الأطباء)</h2>
+                    <div id="messagesList"></div>
+                </div> 
+
+                <div class="dashboard-card" id="profileCard">
+                    <h2>Profile (الملف الشخصي)</h2>
+                    <div id="profileInfo"></div>
+                </div>
+
+            </div>
+        </div>
+    
+    <script>
+        // Simulated patient data (in a real application, this would come from a server)
+        const patientData = {
+            name: "John Doe",
+            age: 35,
+            email: "john.doe@example.com",
+            phone: "+1 (555) 123-4567",
+            bloodType: "A+",
+            appointments: [
+                { date: "2023-05-20", time: "10:00 AM", doctor: "Dr. Smith", department: "Cardiology" },
+                { date: "2023-06-05", time: "2:30 PM", doctor: "Dr. Johnson", department: "Orthopedics" }
+            ],
+            prescriptions: [
+                { name: "Amoxicillin", dosage: "500mg", frequency: "3 times a day", prescribedBy: "Dr. Smith" },
+                { name: "Ibuprofen", dosage: "400mg", frequency: "As needed", prescribedBy: "Dr. Johnson" }
+            ],
+            testResults: [
+                { name: "Blood Test", date: "2023-04-15", result: "Normal", orderedBy: "Dr. Smith" },
+                { name: "X-Ray", date: "2023-03-01", result: "No abnormalities detected", orderedBy: "Dr. Johnson" }
+            ],
+            messages: [
+                    {
+                        id: 1,
+                        from: "Dr. Smith",
+                        date: "2023-05-15",
+                        content: "Your latest blood test results look good. Keep up with the current medication.",
+                        read: false
+                    },
+                    {
+                        id: 2,
+                        from: "Dr. Johnson",
+                        date: "2023-05-14",
+                        content: "Please remember to take your medication with food to avoid stomach upset.",
+                        read: true
+                    }
+                ],
+        };
+
+        function updateWelcomeMessage() {
+            document.getElementById('welcomeMessage').textContent = `Welcome, ${patientData.name}!`;
+        }
+
+        function updateAppointments() {
+            const appointmentsList = document.getElementById('appointmentsList');
+            appointmentsList.innerHTML = '';
+            patientData.appointments.forEach(appointment => {
+                const appointmentElement = document.createElement('div');
+                appointmentElement.classList.add('list-item');
+                appointmentElement.innerHTML = `
+                    <strong>${appointment.date} at ${appointment.time}</strong><br>
+                    Doctor: ${appointment.doctor}<br>
+                    Department: ${appointment.department}
+                `;
+                appointmentsList.appendChild(appointmentElement);
+            });
+        }
+
+        function updatePrescriptions() {
+            const prescriptionsList = document.getElementById('prescriptionsList');
+            prescriptionsList.innerHTML = '';
+            patientData.prescriptions.forEach(prescription => {
+                const prescriptionElement = document.createElement('div');
+                prescriptionElement.classList.add('list-item');
+                prescriptionElement.innerHTML = `
+                    <strong>${prescription.name}</strong><br>
+                    Dosage: ${prescription.dosage}<br>
+                    Frequency: ${prescription.frequency}<br>
+                    Prescribed by: ${prescription.prescribedBy}
+                `;
+                prescriptionsList.appendChild(prescriptionElement);
+            });
+        }
+
+        function updateTestResults() {
+            const testResultsList = document.getElementById('testResultsList');
+            testResultsList.innerHTML = '';
+            patientData.testResults.forEach(test => {
+                const testElement = document.createElement('div');
+                testElement.classList.add('list-item');
+                testElement.innerHTML = `
+                    <strong>${test.name}</strong><br>
+                    Date: ${test.date}<br>
+                    Result: ${test.result}<br>
+                    Ordered by: ${test.orderedBy}
+                `;
+                testResultsList.appendChild(testElement);
+            });
+        }
+
+        function updateProfile() {
+            const profileInfo = document.getElementById('profileInfo');
+            profileInfo.innerHTML = `
+                <p><strong>Name:</strong> ${patientData.name}</p>
+                <p><strong>Age:</strong> ${patientData.age}</p>
+                <p><strong>Email:</strong> ${patientData.email}</p>
+                <p><strong>Phone:</strong> ${patientData.phone}</p>
+                <p><strong>Blood Type:</strong> ${patientData.bloodType}</p>
+            `;
+        }
+
+        function showNotification(message) {
+            const notificationArea = document.getElementById('notificationArea');
+            const toast = document.createElement('div');
+            toast.classList.add('toast');
+            toast.textContent = message;
+            notificationArea.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        function simulateNewNotifications() {
+            setTimeout(() => {
+                const newAppointment = { date: "2023-07-10", time: "11:15 AM", doctor: "Dr. Brown", department: "Neurology" };
+                patientData.appointments.push(newAppointment);
+                updateAppointments();
+                showNotification("New appointment scheduled with Dr. Brown");
+            }, 3000);
+
+            setTimeout(() => {
+                const newPrescription = { name: "Lisinopril", dosage: "10mg", frequency: "Once daily", prescribedBy: "Dr. Smith" };
+                patientData.prescriptions.push(newPrescription);
+                updatePrescriptions();
+                showNotification("New prescription added by Dr. Smith");
+            }, 6000);
+
+            setTimeout(() => {
+                const newTestResult = { name: "MRI Scan", date: "2023-05-01", result: "Results pending", orderedBy: "Dr. Johnson" };
+                patientData.testResults.push(newTestResult);
+                updateTestResults();
+                showNotification("New test result added by Dr. Johnson");
+            }, 9000);
+        }
+        function updateMessages() {
+                const messagesList = document.getElementById('messagesList');
+                messagesList.innerHTML = '';
+                patientData.messages.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message-item');
+                    if (!message.read) {
+                        messageElement.classList.add('unread');
+                    }
+                    messageElement.innerHTML = `
+                        <div class="message-header">
+                            <span><strong>From:</strong> ${message.from}</span>
+                            <span>${message.date}</span>
+                        </div>
+                        <div class="message-content">
+                            ${message.content}
+                        </div>
+                    `;
+                    messageElement.addEventListener('click', () => {
+                        message.read = true;
+                        messageElement.classList.remove('unread');
+                    });
+                    messagesList.appendChild(messageElement);
+                });
+            }
+
+            // Add this to simulateNewNotifications()
+            setTimeout(() => {
+                const newMessage = {
+                    id: patientData.messages.length + 1,
+                    from: "Dr. Brown",
+                    date: "2023-05-16",
+                    content: "Hi! I've reviewed your recent test results. Please schedule a follow-up appointment.",
+                    read: false
+                };
+                patientData.messages.push(newMessage);
+                updateMessages();
+                showNotification("New message from Dr. Brown");
+            }, 12000);
+
+            // Add updateMessages() to the DOMContentLoaded event listener
+            document.addEventListener('DOMContentLoaded', function() {
+                updateWelcomeMessage();
+                updateAppointments();
+                updatePrescriptions();
+                updateTestResults();
+                updateProfile();
+                updateMessages(); // Add this line
+                simulateNewNotifications();
+            });
+        document.addEventListener('DOMContentLoaded', function() {
+            updateWelcomeMessage();
+            updateAppointments();
+            updatePrescriptions();
+            updateTestResults();
+            updateProfile();
+            simulateNewNotifications();
+        });
+    </script>
+</body>
+</html>
